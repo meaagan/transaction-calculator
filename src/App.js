@@ -8,10 +8,15 @@ function App() {
       const dataSet = response.data
       const reducer = (acc, cv) => acc + cv
 
+      
       // convert BTC to CAD
       console.log(dataSet)
       
-
+      dataSet.forEach((transaction) => {
+        if (transaction.currency === "BTC") {
+          return transaction.amount * 21060.39
+        }
+      })
 
       // sort debit 
       const cadDebitTrans = dataSet.filter(function(data) {
@@ -44,12 +49,14 @@ function App() {
 
       console.log("Credit sum = " + cadCreditSum)
       // find total
-
+      console.log("Total = " + (cadCreditSum - cadDebitSum))
     })
 
   return (
     <div className="App">
-      <div></div>
+      <div>
+
+      </div> 
     </div>
   );
 }
