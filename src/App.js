@@ -1,23 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const axios = require('axios');
+
+  axios.get('https://shakepay.github.io/programming-exercise/web/transaction_history.json')
+    .then(function (response) {
+      const dataSet = response.data
+      const reducer = (acc, cv) => acc + cv
+
+      // convert BTC to CAD
+      console.log(dataSet)
+      
+
+
+      // sort debit 
+      const cadDebitTrans = dataSet.filter(function(data) {
+        return data.direction === "debit"
+      })    
+
+      const cadDebit = []
+      
+      cadDebitTrans.forEach((transaction) => {
+          cadDebit.push(transaction.amount)
+      })
+
+      const cadDebitSum = cadDebit.reduce(reducer)
+
+      console.log("Debit sum = " + cadDebitSum)
+
+
+      // sort credit
+      const cadCreditTrans = dataSet.filter(function(data) {
+        return data.direction === "credit"
+      })    
+
+      const cadCredit = []
+      
+      cadCreditTrans.forEach((transaction) => {
+          cadCredit.push(transaction.amount)
+      })
+
+      const cadCreditSum = cadCredit.reduce(reducer)
+
+      console.log("Credit sum = " + cadCreditSum)
+      // find total
+
+    })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div></div>
     </div>
   );
 }
